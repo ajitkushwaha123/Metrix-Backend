@@ -3,7 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import connect from "./database/connection.js";
 import router from "./router/route.js";
-import ENV from "./config.js"
+import ENV from "./config.js";
 
 const app = express();
 const port = ENV.PORT;
@@ -11,7 +11,14 @@ const port = ENV.PORT;
 // Middleware
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
-app.use(cors({ origin: "http://localhost:5173" })); // Specify the allowed origin
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: "GET,POST,PUT,DELETE,OPTIONS",
+    allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept",
+  })
+);
+app.options("*", cors()); // Handle preflight requests
 app.use(morgan("tiny"));
 app.disable("x-powered-by");
 
