@@ -56,9 +56,6 @@ customers.get("/customer-detail", Auth, async (req, res) => {
 });
 
 
-
-
-
 customers.get("/customer-graph" , Auth , async (req , res) => {
   const userId = req.user.userId;
   console.log(userId);
@@ -74,7 +71,7 @@ customers.get("/customer-graph" , Auth , async (req , res) => {
     const customerData = await Customer.aggregate([
       {
         $match: {
-          // userId,
+          userId,
           createdAt: { $gte: startOfSevenDaysAgo, $lt: new Date() },
         },
       },

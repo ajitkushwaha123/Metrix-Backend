@@ -3,10 +3,10 @@ import cors from "cors";
 import morgan from "morgan";
 import connect from "./database/connection.js";
 import router from "./router/route.js";
-import ENV from "./config.js";
+import ENV from "./config.js"
 
 const app = express();
-// const port = 8000;
+const port = ENV.PORT;
 
 // Middleware
 app.use(express.json({ limit: "50mb" }));
@@ -31,7 +31,7 @@ app.use((err, req, res, next) => {
 // Database connection and server start
 connect()
   .then(() => {
-    app.listen(ENV.PORT, () => {
+    app.listen(port, () => {
       console.log(`Server connected to http://localhost:${ENV.PORT}`);
     });
   })

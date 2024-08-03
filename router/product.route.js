@@ -6,11 +6,32 @@ import { upload } from "../middleware/multer.js";
 
 const products = express();
 
+products.get("/", Auth, async (req, res) => {
+  try {
+    const searchQuery = req.query.search;
+    console.log(searchQuery);
+    let products;
+    if (!searchQuery) {
+      console.log("No search query");
+    }
+    if (searchQuery) {
+      products = await Product.find({
+        productName: { $regex: searchQuery, $options: "i" },
+      });
+    } else {
+      products = await Product.find();
+    }
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 products.get("/" , Auth , async (req , res) => {
   const userId = req.user.userId;
   console.log("User ID:" , userId);
   try{
-    const products = await Product.find({userId : req.user.userId});
+    const products = await Product.find({userId : userId});
     res.status(200).json(products);
   }
   catch(err){
@@ -207,23 +228,6 @@ products.get("/:id", Auth, async (req, res) => {
   }
 });
 
-products.get("/",  Auth , async (req, res) => {
-  try {
-    const searchQuery = req.query.search;
-    console.log(searchQuery);
-    let products;
-    if (searchQuery) {
-      products = await Product.find({
-        productName: { $regex: searchQuery, $options: "i" },
-      });
-    } else {
-      products = await Product.find();
-    }
-    res.status(200).json(products);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 // products.get("/", Auth, async (req, res) => {
 //   const qNew = req.query.new;
