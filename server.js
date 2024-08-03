@@ -6,20 +6,20 @@ import router from "./router/route.js";
 import ENV from "./config.js";
 
 const app = express();
-const port = 5000;
+const port = ENV.PORT;
 
 // Middleware
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://your-frontend-domain.com"], // Add your frontend domain here
     methods: "GET,POST,PUT,DELETE,OPTIONS",
     allowedHeaders:
       "Origin, X-Requested-With, Content-Type, Accept, Authorization",
     credentials: true, // Allow credentials
     preflightContinue: false,
-    optionsSuccessStatus: 200,
+    optionsSuccessStatus: 204,
   })
 );
 app.options("*", cors()); // Handle preflight requests
@@ -43,7 +43,7 @@ app.use((err, req, res, next) => {
 connect()
   .then(() => {
     app.listen(port, () => {
-      console.log(`Server connected to http://localhost:5000`);
+      console.log(`Server connected to http://localhost:${ENV.PORT}`);
     });
   })
   .catch((error) => {
