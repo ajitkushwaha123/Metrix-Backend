@@ -10,6 +10,7 @@ import category from "./category.route.js";
 import customers from "./customer.route.js";
 // import { weeklySales } from "../controllers/appControllers.js";
 import bulkupload from "./Bulk.route.js";
+import orderTable from "./OrderTable.route.js";
 
 
 
@@ -44,6 +45,7 @@ router.use("/orders", orders);
 router.use("/category" , category)
 router.use("/customer" , customers)
 router.use("/bulkupload" , bulkupload);
+router.use("/orderTable" , orderTable);
 // router.use("/weeklySales" , weeklySales);
 
 
