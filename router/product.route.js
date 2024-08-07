@@ -136,21 +136,15 @@ products.post("/", upload.array("photos", 4), Auth, async (req, res) => {
       categoryId, // Make sure this is correctly set in the request body
     } = req.body;
 
-    console.log("req.files", req.files);
-
+    // Handle file uploads
     if (req.files && req.files.length > 0) {
       const uploadPromises = req.files.map((file) =>
         cloudinary.uploader.upload(file.path)
       );
       const results = await Promise.all(uploadPromises);
-      console.log("results", results);
-
       const photoUrls = results.map((result) => result.url);
-
       const foundCategory = await Category.findOne({ name: category });
       const categoryID = foundCategory ? foundCategory._id : null;
-
-      console.log("categoryID", categoryID);
 
       const newProduct = new Product({
         productName,
@@ -163,21 +157,41 @@ products.post("/", upload.array("photos", 4), Auth, async (req, res) => {
         price,
         stock,
         status,
-        photos: photoUrls, // Store array of photo URLs
+        photos: photoUrls,
         userId: req.user.userId,
         categoryId: categoryID,
       });
 
       // Save the product
       const savedProduct = await newProduct.save();
-      console.log("savedProduct", savedProduct);
       res.status(200).json(savedProduct);
     } else {
-      res.status(400).json({ error: "No photos uploaded" });
+      // Handle case when no files are uploaded
+      const foundCategory = await Category.findOne({ name: category });
+      const categoryID = foundCategory ? foundCategory._id : null;
+
+      const newProduct = new Product({
+        productName,
+        discountPrice,
+        orderType,
+        longDescription,
+        variant,
+        shortDescription,
+        category,
+        price,
+        stock,
+        status,
+        userId: req.user.userId,
+        categoryId: categoryID,
+      });
+
+      // Save the product
+      const savedProduct = await newProduct.save();
+      res.status(200).json(savedProduct);
     }
   } catch (err) {
-    console.error("Error saving product:", err);
-    res.status(500).json({ error: err.message });
+    console.error("Error creating product:", err);
+    res.status(500).json({ error: "Error creating product" });
   }
 });
 
