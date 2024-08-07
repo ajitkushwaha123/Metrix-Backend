@@ -9,6 +9,8 @@ orderTable.post("/", Auth, async (req, res) => {
     const { userId } = req.user;
     console.log("User:", userId);
 
+    console.log("Table:", req.body.table);
+
     const orderTable = await OrderTable.create({
       user: userId,
       table: req.body.table,
@@ -28,13 +30,18 @@ orderTable.put("/", Auth, async (req, res) => {
     const { userId } = req.user;
     console.log("User:", userId);
 
-    const orderTable = await OrderTable.findOneAndUpdate(
-      { userId: userId },
-      {
-        $set: req.body,
-      },
+    let orderTable = await OrderTable.findOneAndUpdate(
+      { user: userId },
+      { $set: req.body },
       { new: true }
     );
+
+    if (!orderTable) {
+      orderTable = await OrderTable.create({
+        user: userId,
+        table: req.body.table,
+      });
+    }
 
     res.status(201).json({ orderTable });
   } catch (err) {
@@ -44,6 +51,8 @@ orderTable.put("/", Auth, async (req, res) => {
       .json({ error: "Failed to update table. Please try again later." });
   }
 });
+
+
 
 orderTable.get("/" , Auth , async (req , res) => {
     const {userId} = req.user;

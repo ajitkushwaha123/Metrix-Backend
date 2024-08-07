@@ -3,8 +3,24 @@ import Auth from "../middleware/auth.js";
 import express from "express";
 import { v2 as cloudinary } from "cloudinary";
 import { upload } from "../middleware/multer.js";
+import { Category } from "../models/Category.models.js";
 
 const products = express();
+
+products.get("/category/:id" , Auth , async (req , res) => {
+  const userId = req.user.userId;
+  const categoryId = req.params.id;
+  console.log("User ID:" , userId);
+  console.log("Category ID:" , categoryId);
+  try{
+    const products = await Product.find({userId : userId , categoryId : categoryId});
+    res.status(200).json(products);
+  }
+  catch(err){
+    console.error("Error fetching products:" , err);
+    res.status(500).json({error : "Failed to fetch products. Please try again later."});
+  }
+});
 
 products.get("/", Auth, async (req, res) => {
   try {
@@ -117,10 +133,8 @@ products.post("/", upload.array("photos", 4), Auth, async (req, res) => {
       stock,
       status,
       userId,
-      // photos,
+      categoryId, // Make sure this is correctly set in the request body
     } = req.body;
-
-    console.log("red", req.body);
 
     console.log("req.files", req.files);
 
@@ -133,7 +147,10 @@ products.post("/", upload.array("photos", 4), Auth, async (req, res) => {
 
       const photoUrls = results.map((result) => result.url);
 
-      console.log(photoUrls);
+      const foundCategory = await Category.findOne({ name: category });
+      const categoryID = foundCategory ? foundCategory._id : null;
+
+      console.log("categoryID", categoryID);
 
       const newProduct = new Product({
         productName,
@@ -148,11 +165,10 @@ products.post("/", upload.array("photos", 4), Auth, async (req, res) => {
         status,
         photos: photoUrls, // Store array of photo URLs
         userId: req.user.userId,
+        categoryId: categoryID,
       });
 
-      console.log("newProduct", newProduct);
-
-      console.log("newProduct", newProduct);
+      // Save the product
       const savedProduct = await newProduct.save();
       console.log("savedProduct", savedProduct);
       res.status(200).json(savedProduct);
@@ -165,9 +181,10 @@ products.post("/", upload.array("photos", 4), Auth, async (req, res) => {
   }
 });
 
+
 //Update
 products.put("/:id", upload.array("photos"), Auth, async (req, res, next) => {
-  const { id } = req.params; // Corrected destructuring
+  const { id } = req.params; 
 
   console.log(id);
   console.log(req.body);
@@ -181,7 +198,7 @@ products.put("/:id", upload.array("photos"), Auth, async (req, res, next) => {
       console.log("results", results);
 
       const photoUrls = results.map((result) => result.url);
-      req.body.photos = photoUrls; // Add photo URLs to the request body
+      req.body.photos = photoUrls; 
       console.log("body", req.body);
     } catch (error) {
       return res.status(500).json({ error: "Error uploading photos" });
@@ -227,41 +244,5 @@ products.get("/:id", Auth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-
-// products.get("/", Auth, async (req, res) => {
-//   const qNew = req.query.new;
-//   const qCategory = req.query.category;
-//   const { userId } = req.user;
-
-//   try {
-//     let products;
-//     if (qNew) {
-//       // Fetch the latest 5 products based on creation date
-//       products = await Product.find({ userId })
-//         .sort({ createdAt: -1 })
-//         .limit(5);
-//     } else if (qCategory) {
-//       // Fetch products based on the specified category
-//       products = await Product.find({
-//         userId,
-//         category: {
-//           $in: [qCategory],
-//         },
-//       });
-//     } else {
-//       // Fetch all products
-//       products = await Product.find({ userId });
-//     }
-//     res.status(200).json(products);
-//   } catch (err) {
-//     console.error("Error fetching products:", err);
-//     res
-//       .status(500)
-//       .json({ error: "Failed to fetch products. Please try again later." });
-//   }
-// });
-
-
 
 export default products;

@@ -17,6 +17,9 @@ const ProductSchema = new mongoose.Schema(
           // default : "published",
         },
         category: {type : String}, 
+        categoryId : {
+          type : String,
+        },
         price: {
           type: Number,
         },

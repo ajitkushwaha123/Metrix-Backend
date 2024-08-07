@@ -17,13 +17,12 @@ cloudinary.config({
 const category = express();
 
 category.post("/", upload.single("photo"), Auth, async (req, res, next) => {
+  const { userId } = req.user; 
+
   try {
     if (req.file) {
       const filePath = req.file.path;
       const result = await cloudinary.uploader.upload(filePath);
-
-      // Assuming you have user authentication (e.g., req.user contains the authenticated user)
-      const { userId } = req.user; // Adjust this based on your user model
 
       console.log("userId", userId);
       const user = await UserModel.findOne({ userId });
@@ -33,19 +32,29 @@ category.post("/", upload.single("photo"), Auth, async (req, res, next) => {
       const newCategory = new Category({
         name: req.body.name,
         photo: result.url,
-        user: userId, // Associate the category with the user
+        user: userId,
       });
 
        const category = req.user;
        console.log("category", category);
-       // Update data using promises
 
       await newCategory.save();
       res.status(200).json({
         category: newCategory,
       });
     } else {
-      res.status(400).json({ error: "No photo uploaded" });
+      const newCategory = new Category({
+        name: req.body.name,
+        user: userId,
+      });
+
+      const category = req.user;
+      console.log("category", category);
+
+      await newCategory.save();
+      res.status(200).json({
+        category: newCategory,
+      });
     }
   } catch (err) {
     console.error(err);
