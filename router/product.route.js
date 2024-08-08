@@ -43,7 +43,7 @@ products.get("/", Auth, async (req, res) => {
   }
 });
 
-products.get("/" , Auth , async (req , res) => {
+products.get("/data" , Auth , async (req , res) => {
   const userId = req.user.userId;
   console.log("User ID:" , userId);
   try{
