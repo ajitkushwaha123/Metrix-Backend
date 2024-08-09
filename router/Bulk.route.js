@@ -54,6 +54,8 @@ bulkupload.post(
       // console.log(response);
 
       for (let i = 0; i < response.length; i++) {
+         const foundCategory = await Category.findOne({ name: response[i].Category });
+         const categoryID = foundCategory ? foundCategory._id : null;
         userData.push({
           productName: response[i].Name,
           category: response[i].Category,
@@ -62,6 +64,7 @@ bulkupload.post(
           photos: [response[i].Photos],
           status: "published",
           userId: userId,
+          categoryId: categoryID,
         });
 
         const categoryExists = await Category.findOne({

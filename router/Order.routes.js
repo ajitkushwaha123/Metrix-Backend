@@ -677,6 +677,7 @@ orders.post("/", Auth, async (req, res) => {
       orderStatus,
       orderNote,
       orderType,
+      tableId,
     } = req.body;
     const newOrder = new Order({
       userId,
@@ -691,6 +692,7 @@ orders.post("/", Auth, async (req, res) => {
       orderStatus,
       orderNote,
       orderType,
+      tableId,
     });
     const savedOrder = await newOrder.save();
     res.status(200).json(savedOrder);
@@ -699,6 +701,8 @@ orders.post("/", Auth, async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
 
 // Update
 orders.put("/:id", Auth, async (req, res) => {
