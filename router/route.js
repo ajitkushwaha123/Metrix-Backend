@@ -12,6 +12,7 @@ import customers from "./customer.route.js";
 import bulkupload from "./Bulk.route.js";
 import orderTable from "./orderTable.route.js";
 import variant from "./Variant.route.js";
+import addons from "./Addons.route.js";
 
 
 
@@ -48,6 +49,7 @@ router.use("/customer" , customers)
 router.use("/bulkupload" , bulkupload);
 router.use("/orderTable" , orderTable);
 router.use("/variant" , variant);
+router.use("/addons" , addons);
 // router.use("/weeklySales" , weeklySales);
 
 
