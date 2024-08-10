@@ -16,6 +16,24 @@ cloudinary.config({
 
 const category = express();
 
+category.post("/bulk-category" , Auth , async (req , res) => {
+  const { userId } = req.user;
+
+  for(let i = 0; i < req.body.length; i++){
+    const newCategory = new Category({
+      name: req.body[i].name,
+      user: userId
+    });
+
+    await newCategory.save();
+  }
+
+  res.status(200).json({
+    message: "Categories added successfully"
+  })
+  console.log(req.body);
+})
+
 category.post("/", upload.single("photo"), Auth, async (req, res, next) => {
   const { userId } = req.user; 
 
