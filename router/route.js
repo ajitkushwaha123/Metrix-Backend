@@ -11,6 +11,7 @@ import customers from "./customer.route.js";
 // import { weeklySales } from "../controllers/appControllers.js";
 import bulkupload from "./Bulk.route.js";
 import orderTable from "./orderTable.route.js";
+import variant from "./Variant.route.js";
 
 
 
@@ -46,6 +47,7 @@ router.use("/category" , category)
 router.use("/customer" , customers)
 router.use("/bulkupload" , bulkupload);
 router.use("/orderTable" , orderTable);
+router.use("/variant" , variant);
 // router.use("/weeklySales" , weeklySales);
 
 
