@@ -8,10 +8,14 @@ const discount = express();
 discount.post("/bulk-discount", Auth, async (req, res) => {
   const { userId } = req.user;
 
+  console.log("userId", req.body);
+
   for (let i = 0; i < req.body.length; i++) {
     const newDiscount = new Discount({
       name: req.body[i].name,
       user: userId,
+      couponValue: req.body[i].couponValue,
+      couponType: req.body[i].couponType,
     });
 
     await newDiscount.save();

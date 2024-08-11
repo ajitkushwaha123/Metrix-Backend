@@ -53,7 +53,5 @@ router.use("/variant" , variant);
 router.use("/addons" , addons);
 router.use("/tax" , tax);
 router.use("/discount" , discount);
-// router.use("/weeklySales" , weeklySales);
-
 
 export default router;
