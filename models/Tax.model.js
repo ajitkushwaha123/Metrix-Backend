@@ -8,6 +8,10 @@ const TaxSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  taxPercentage: {
+    type: Number,
+    required: true,
+  },
 });
 
 export const Tax = mongoose.model("Tax", TaxSchema);

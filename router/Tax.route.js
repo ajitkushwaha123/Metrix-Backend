@@ -12,6 +12,7 @@ tax.post("/bulk-tax", Auth, async (req, res) => {
     const newTax = new Tax({
       name: req.body[i].name,
       user: userId,
+      taxPercentage: req.body[i].taxPercentage,
     });
 
     await newTax.save();
@@ -30,7 +31,7 @@ tax.get("/", Auth, async (req, res, next) => {
 
     console.log("userId", userId);
     const taxes = await Tax.find({ user: userId }).select(
-      "_id name user"
+      "_id name taxPercentage user"
     );
 
     res.status(200).json({
