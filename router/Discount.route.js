@@ -33,7 +33,7 @@ discount.get("/", Auth, async (req, res, next) => {
     const { userId } = req.user;
 
     console.log("userId", userId);
-    const discounts = await Discount.find({ user: userId }).select("_id name user");
+    const discounts = await Discount.find({ user: userId }).select("_id name couponType couponValue user");
 
     res.status(200).json({
       discounts,
