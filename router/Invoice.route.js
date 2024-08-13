@@ -84,21 +84,24 @@ invoice.get("/invoice/:id", async (req, res) => {
 
   const invoiceData = {
     createdAt: invoice.createdAt,
-    restourantLogo : invoice.restourantLogo,
-    retourantName: invoice.retourantName,
+    restourantLogo:
+      invoice.restourantLogo ||
+      "https://1000logos.net/wp-content/uploads/2016/10/Batman-Logo-1939.png",
+    restourantName: invoice.restourantName,
     customerName: invoice.customerName,
-    customerPhone : invoice.customerPhone,
+    customerPhone: invoice.customerPhone,
     restourantAddress: invoice.restourantAddress,
     billStatus: invoice.billStatus,
     customerPhone: invoice.customerPhone,
     paymentType: invoice.paymentType,
     orderType: invoice.orderType,
     orderNumber: invoice.orderNumber,
-    orderDate : invoice.orderDate,
-    orderTime : invoice.orderTime,
+    orderDate: invoice.orderDate,
+    orderTime: invoice.orderTime,
     items: invoice.items,
-    restourantPhone : invoice.restourantPhone,
+    restourantPhone: invoice.restourantPhone,
     tax: invoice.tax,
+    billStatus : invoice.billStatus
   };
 
   console.log(invoiceData);

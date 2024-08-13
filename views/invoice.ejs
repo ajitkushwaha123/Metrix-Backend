@@ -18,6 +18,7 @@
       .logo {
         width: 100px;
         height: 100px;
+        object-fit: cover;
         border-radius: 100%;
       }
       .retourant-name {
@@ -26,6 +27,9 @@
         color: #000;
       }
 
+      .address{
+        margin-top:12px;
+      }
       .chakra-petch-light {
         font-family: "Chakra Petch", sans-serif;
         font-weight: 300;
@@ -110,13 +114,14 @@
 
       .item {
         width: 100%;
-        text-align: center;
+        text-align: start;
         text-transform: uppercase;
         display: flex;
         flex-direction: column;
         /* margin-top: 13px; */
         margin-left: 15px;
         margin-right: 15px;
+
       }
 
       .items {
@@ -159,7 +164,7 @@
       <img class="logo" src="<%= restourantLogo %>" alt="Restaurant Logo" />
 
       <div class="retourant-name chakra-petch-semibold">
-        <%= retourantName %>
+        <%= restourantName %>
       </div>
       <div class="address chakra-petch-semibold">
         <%= restourantAddress %>
@@ -196,8 +201,8 @@
           <span class="chakra-petch-semibold"><%= orderType %></span>
         </p>
         <p class="hi">
-          Order Number:
-          <span class="chakra-petch-semibold"><%= orderNumber %></span>
+          Bill Status : 
+          <span class="chakra-petch-semibold"><%= billStatus %></span>
         </p>
       </div>
 
@@ -217,7 +222,7 @@
             += item.quantity * item.price; %>
             <tr>
               <td><%= item.quantity %></td>
-              <td><%= item.name %></td>
+              <td><%= item.productName %></td>
               <td><%= item.price %></td>
               <td><%= item.quantity * item.price %></td>
             </tr>

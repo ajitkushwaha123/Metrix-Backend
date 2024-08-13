@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const InvoiceSchema = new mongoose.Schema({
   restourantLogo: String,
   invoiceNumber: String,
-  retourantName: String,
+  restourantName: String,
   customerName: String,
   restourantAddress: String,
   restourantPhone: Number,
@@ -14,7 +14,7 @@ const InvoiceSchema = new mongoose.Schema({
   orderNumber: String,
   items: [
     {
-      name: String,
+      productName: String,
       quantity: Number,
       price: Number,
     },
