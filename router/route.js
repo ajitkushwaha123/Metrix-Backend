@@ -15,6 +15,7 @@ import variant from "./Variant.route.js";
 import addons from "./Addons.route.js";
 import tax from "./Tax.route.js";
 import discount from "./Discount.route.js";
+import invoice from "./Invoice.route.js";
 
 
 const router = Router();
@@ -53,5 +54,6 @@ router.use("/variant" , variant);
 router.use("/addons" , addons);
 router.use("/tax" , tax);
 router.use("/discount" , discount);
+router.use("/invoice" , invoice);
 
 export default router;
