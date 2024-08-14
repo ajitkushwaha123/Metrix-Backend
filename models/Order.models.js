@@ -29,6 +29,9 @@ const OrderSchema = new mongoose.Schema(
     orderType: {
       type: String,
     },
+    invoiceId : {
+      type: String,
+    },
     orderNote: { type: String },
   },
   { timestamps: true }

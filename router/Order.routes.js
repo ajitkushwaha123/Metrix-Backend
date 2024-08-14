@@ -678,6 +678,7 @@ orders.post("/", Auth, async (req, res) => {
       orderNote,
       orderType,
       tableId,
+      invoiceId,
     } = req.body;
     const newOrder = new Order({
       userId,
@@ -693,6 +694,7 @@ orders.post("/", Auth, async (req, res) => {
       orderNote,
       orderType,
       tableId,
+      invoiceId,
     });
     const savedOrder = await newOrder.save();
     res.status(200).json(savedOrder);
