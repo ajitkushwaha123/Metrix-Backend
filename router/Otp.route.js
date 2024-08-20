@@ -39,7 +39,7 @@ otps.post("/", async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      msg: "OTP SENT SUCCESS",
+      msg: "OTP SENT SUCCESS" + otp,
     });
   } catch (err) {
     return res.status(400).json({
