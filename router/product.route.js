@@ -23,6 +23,8 @@ products.get("/category/:id" , Auth , async (req , res) => {
 });
 
 products.get("/", Auth, async (req, res) => {
+  const {userId} = req.user;
+  console.log("query" , userId);
   try {
     const searchQuery = req.query.search;
     console.log(searchQuery);
@@ -32,10 +34,37 @@ products.get("/", Auth, async (req, res) => {
     }
     if (searchQuery) {
       products = await Product.find({
+        userId: userId,
         productName: { $regex: searchQuery, $options: "i" },
       });
     } else {
-      products = await Product.find();
+      products = await Product.find({ userId: userId });
+    }
+
+    console.log(products);
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+products.get("/shortCode", Auth, async (req, res) => {
+  const { userId } = req.user;
+  console.log("query", userId);
+  try {
+    const searchQuery = req.query.search;
+    console.log(searchQuery);
+    let products;
+    if (!searchQuery) {
+      console.log("No search query");
+    }
+    if (searchQuery) {
+      products = await Product.find({
+        userId: userId,
+        shortCode : { $regex: searchQuery, $options: "i" },
+      });
+    } else {
+      products = await Product.find({ userId: userId });
     }
     res.status(200).json(products);
   } catch (err) {
@@ -133,7 +162,9 @@ products.post("/", upload.array("photos", 4), Auth, async (req, res) => {
       stock,
       status,
       userId,
-      categoryId, // Make sure this is correctly set in the request body
+      categoryId,
+      shortCode,
+      productType,
     } = req.body;
 
     // Handle file uploads
@@ -160,6 +191,8 @@ products.post("/", upload.array("photos", 4), Auth, async (req, res) => {
         photos: photoUrls,
         userId: req.user.userId,
         categoryId: categoryID,
+        shortCode,
+        productType ,
       });
 
       // Save the product
@@ -181,6 +214,8 @@ products.post("/", upload.array("photos", 4), Auth, async (req, res) => {
         price,
         stock,
         status,
+        shortCode,
+        productType,
         userId: req.user.userId,
         categoryId: categoryID,
       });

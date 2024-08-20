@@ -4,7 +4,6 @@ const ProductSchema = new mongoose.Schema(
   {
     productName: {
       type: String,
-      required: true,
     },
     userId: {
       type: String,
@@ -14,7 +13,7 @@ const ProductSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      // default : "published",
+      default : "published",
     },
     category: { type: String },
     categoryId: {
@@ -36,14 +35,17 @@ const ProductSchema = new mongoose.Schema(
       type: String,
     },
     variant: {
-      type: String,
+      type: Array,
     },
     photos: {
       type: Array,
-      default: [
-        "https://i.pinimg.com/564x/b0/c4/f2/b0c4f2bf9de44f7aa23d2ff3d7c274dd.jpg",
-      ],
     },
+    shortCode : {
+      type : String,
+    },
+    productType : {
+      type : String,
+    }
   },
   { timestamps: true }
 );

@@ -12,7 +12,6 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, "Password is required"],
   },
   email: {
     type: String,
@@ -26,7 +25,6 @@ const UserSchema = new mongoose.Schema({
   city: {type  : String},
   role:{
     type : String,
-    required : true,
     default : "CUSTOMER",
   },
   paymentInformation : [

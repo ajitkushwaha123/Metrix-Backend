@@ -32,7 +32,22 @@ const OrderSchema = new mongoose.Schema(
     invoiceId : {
       type: String,
     },
+    customerSince : {
+      type : String,
+    },
     orderNote: { type: String },
+    discount : {
+      type : Number,
+    },
+    tax : {
+      type : Number,
+    },
+    discountType : {
+      type : String,
+    },
+    totalAmount : {
+      type : Number,
+    }
   },
   { timestamps: true }
 );

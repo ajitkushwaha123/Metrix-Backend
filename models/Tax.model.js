@@ -6,11 +6,9 @@ const TaxSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    required: true,
   },
   taxPercentage: {
     type: Number,
-    required: true,
   },
 });
 

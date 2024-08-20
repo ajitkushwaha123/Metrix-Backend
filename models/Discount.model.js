@@ -6,15 +6,12 @@ const DiscountSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    required: true,
   },
   couponValue: {
     type: Number,
-    required: true,
   },
   couponType: {
     type: String,
-    required: true,
   },
 });
 

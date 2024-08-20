@@ -104,7 +104,7 @@ export async function login(req, res) {
       token,
     });
   } catch (error) {
-    return res.status(500).send({ error });
+    return res.status(500).send({  error });
   }
 }
 

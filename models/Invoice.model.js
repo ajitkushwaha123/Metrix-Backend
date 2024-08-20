@@ -23,6 +23,12 @@ const InvoiceSchema = new mongoose.Schema({
   orderDate: {
     type: String,
   },
+  discount : {
+    type : Number,
+  },
+  discountType : {
+    type : String,
+  },
   orderTime: {
     type: String,
   },

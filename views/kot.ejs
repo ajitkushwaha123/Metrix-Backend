@@ -12,7 +12,7 @@
       body {
         margin: 0;
         padding: 0;
-        font-size: 12px; /* Reduced font size */
+        font-size: 12px;
       }
 
       .container {
@@ -21,7 +21,7 @@
         align-items: center;
         flex-direction: column;
         width: 100%;
-        padding: 10px; /* Reduced padding */
+        padding: 10px; 
         box-sizing: border-box;
       }
 
@@ -85,7 +85,10 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
-        padding-bottom: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
+        /* padding-bottom: 15px; */
+        font-size: 17px;
       }
 
       .detail {
@@ -183,37 +186,10 @@
       </div>
 
       <div class="date chakra-petch-semibold">
-        <div class="border date">
+        <div class="date">
           <div><%= orderDate %></div>
           <div><%= orderTime %></div>
         </div>
-      </div>
-
-      <div class="detail chakra-petch-semibold">
-        <p class="hi">
-          Customer Name:
-          <span class="chakra-petch-semibold"><%= customerName %></span>
-        </p>
-        <p class="hi">
-          Phone: <span class="chakra-petch-semibold"><%= customerPhone %></span>
-        </p>
-      </div>
-
-      <div class="border bord"></div>
-
-      <div class="detail pad chakra-petch-semibold">
-        <p class="hi">
-          Payment Method:
-          <span class="chakra-petch-semibold"><%= paymentType %></span>
-        </p>
-        <p class="hi">
-          Order Type:
-          <span class="chakra-petch-semibold"><%= orderType %></span>
-        </p>
-        <p class="hi">
-          Bill Status :
-          <span class="chakra-petch-semibold"><%= billStatus %></span>
-        </p>
       </div>
 
       <div class="item">
@@ -271,11 +247,6 @@
             </tr>
           </tbody>
         </table>
-      </div>
-
-      <div class="bottom chakra-petch-bold">
-        Please Visit Us Again <br />
-        Thank You ...!
       </div>
     </div>
   </body>

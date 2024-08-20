@@ -679,6 +679,11 @@ orders.post("/", Auth, async (req, res) => {
       orderType,
       tableId,
       invoiceId,
+      customerSince,
+      discount,
+      tax,
+      discountType,
+      totalAmount ,
     } = req.body;
     const newOrder = new Order({
       userId,
@@ -695,6 +700,11 @@ orders.post("/", Auth, async (req, res) => {
       orderType,
       tableId,
       invoiceId,
+      customerSince,
+      discount,
+      tax,
+      discountType,
+      totalAmount,
     });
     const savedOrder = await newOrder.save();
     res.status(200).json(savedOrder);
