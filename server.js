@@ -16,7 +16,7 @@ app.use(
     methods: "GET,POST,PUT,DELETE,OPTIONS",
     allowedHeaders:
       "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-    credentials: true, 
+    credentials: true,
     preflightContinue: false,
     optionsSuccessStatus: 204,
   })
@@ -39,7 +39,7 @@ app.use((err, req, res, next) => {
 connect()
   .then(() => {
     app.listen(port, () => {
-      console.log(`Server connected to http://localhost:${ENV.PORT}`);
+      console.log(`Server connected to http://localhost:${port}`);
     });
   })
   .catch((error) => {
