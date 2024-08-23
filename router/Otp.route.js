@@ -13,6 +13,7 @@ const otps = express.Router();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 
+
 const twilioClient = twilio(accountSid, authToken);
 
 otps.post("/", async (req, res) => {
@@ -31,6 +32,8 @@ otps.post("/", async (req, res) => {
       { otp, otpExpiration: new Date(cDate.getTime()) },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
+
+    console.log(accountSid);
 
     // Send OTP via Twilio
     const message = await twilioClient.messages.create({
