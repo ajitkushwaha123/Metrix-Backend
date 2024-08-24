@@ -27,3 +27,4 @@ dist-ssr
 # Ignore config.js
 config.js
 .env
+.env
