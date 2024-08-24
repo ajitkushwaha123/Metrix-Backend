@@ -18,6 +18,7 @@ app.use(
       "http://localhost:5173",
       "https://crm.magicscale.in",
       "http://82.112.237.229",
+      "kravy.magicscale.in",
     ], // Add your frontend domain here
     methods: "GET,POST,PUT,DELETE,OPTIONS",
     allowedHeaders:
