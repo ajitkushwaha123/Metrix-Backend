@@ -12,7 +12,10 @@ const otps = express.Router();
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 859983d (updates)
 
 const twilioClient = twilio(accountSid, authToken);
 

@@ -3,7 +3,11 @@ import cors from "cors";
 import morgan from "morgan";
 import connect from "./database/connection.js";
 import router from "./router/route.js";
+<<<<<<< HEAD
 // import ENV from "./config.js";
+=======
+import ENV from "./config.js";
+>>>>>>> 859983d (updates)
 import dotenv from "dotenv";
 dotenv.config();
 
