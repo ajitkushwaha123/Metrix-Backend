@@ -3,11 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import connect from "./database/connection.js";
 import router from "./router/route.js";
-<<<<<<< HEAD
 // import ENV from "./config.js";
-=======
-import ENV from "./config.js";
->>>>>>> 859983d (updates)
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -22,6 +18,7 @@ app.use(
       "http://localhost:5173",
       "https://crm.magicscale.in",
       "http://82.112.237.229",
+      "kravy.magicscale.in",
     ], // Add your frontend domain here
     methods: "GET,POST,PUT,DELETE,OPTIONS",
     allowedHeaders:
