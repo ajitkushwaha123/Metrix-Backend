@@ -1,3 +1,4 @@
+
 # Logs
 logs
 *.log
@@ -25,4 +26,5 @@ dist-ssr
 
 # Ignore config.js
 config.js
+.env
 .env
