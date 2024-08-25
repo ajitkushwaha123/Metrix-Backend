@@ -5,7 +5,6 @@ import puppeteer from "puppeteer";
 import path from "path";
 import fs from "fs";
 import Auth from "../middleware/auth.js";
-// import { promisify } from "util";
 
 // Create Invoice
 
@@ -109,7 +108,6 @@ invoice.get("/invoice/:id", async (req, res) => {
     customerPhone: invoice.customerPhone,
     restourantAddress: invoice.restourantAddress,
     billStatus: invoice.billStatus,
-    customerPhone: invoice.customerPhone,
     paymentType: invoice.paymentType,
     orderType: invoice.orderType,
     orderNumber: invoice.orderNumber,
@@ -118,7 +116,6 @@ invoice.get("/invoice/:id", async (req, res) => {
     items: invoice.items,
     restourantPhone: invoice.restourantPhone,
     tax: invoice.tax,
-    billStatus: invoice.billStatus,
     discount: invoice.discount,
   };
 
@@ -130,7 +127,9 @@ invoice.get("/invoice/:id", async (req, res) => {
       invoiceData
     );
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: "networkidle0" });
 
@@ -149,10 +148,10 @@ invoice.get("/invoice/:id", async (req, res) => {
     await page.pdf({
       path: pdfPath,
       width: "4in",
-      height: `${contentHeight}px`, // Adjusted to match content height
+      height: `${contentHeight}px`, 
       printBackground: true,
       margin: { top: "10px", right: "10px", bottom: "10px", left: "10px" }, // Reduced margins
-      scale: 1, // Slightly scale down the content
+      scale: 1, 
     });
 
     await browser.close();
@@ -200,7 +199,9 @@ invoice.get("/kot/:id", async (req, res) => {
       invoiceData
     );
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: "networkidle0" });
 
