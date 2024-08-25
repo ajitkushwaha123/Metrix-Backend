@@ -103,7 +103,7 @@ invoice.get("/invoice/:id", async (req, res) => {
     createdAt: invoice.createdAt,
     restourantLogo:
       invoice.restourantLogo ||
-      "https://1000logos.net/wp-content/uploads/2016/10/Batman-Logo-1939.png",
+      "data:image/svg+xml,%3csvg%20class='css-ze2te4%20css-qd6ojx'%20viewBox='0%200%20100%2087.4823698039547'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20transform='translate(-2.89139620338093,%20-8.991537183074797)%20scale(0.35260930129705087)'%20class='css-1e98oqk'%20fill='%23ffffff'%3e%3cg%3e%3cpath%20d='M64.3,132.1l78.8,136.5c1.2,2.2-0.3,5-2.9,5H83.6c-3.2,0-6.1-1.7-7.8-4.5L9.4,154c-1.6-2.7-1.6-6.2,0-8.9L26.8,115h0.1%20l21.5-37.2h-0.1l15.9-27.5c13.1-22.6,45.5-24,59.8-2.2c0.3,0.5,0.6,0.9,0.9,1.4l85.5,148c0.1,0.1,0.2,0.2,0.2,0.3%20c10.2,17.4,35.3,17.1,45.4-0.3l7.7-13.3c-11.6-0.6-22.1-6.9-27.9-17.1L157,30.5c-1.2-2.2,0.3-5,2.9-5h56.5c3.2,0,6.1,1.7,7.8,4.5%20l66.4,115c1.6,2.7,1.6,6.2,0,8.9l-7.7,13.3L243.8,235l-8.4,14.5c-13.1,22.6-45.7,23.6-59.5,1.4c-0.2-0.4-0.6-0.9-0.8-1.3l-85.5-148%20c-0.1-0.1-0.2-0.2-0.2-0.3c-10.2-17.3-35.3-17-45.3,0.3L36.3,115C48,115.6,58.5,122,64.3,132.1z'%3e%3c/path%3e%3c/g%3e%3c/g%3e%3c/svg%3e",
     restourantName: invoice.restourantName,
     customerName: invoice.customerName,
     customerPhone: invoice.customerPhone,
@@ -181,7 +181,7 @@ invoice.get("/kot/:id", async (req, res) => {
     createdAt: invoice.createdAt,
     restourantLogo:
       invoice.restourantLogo ||
-      "https://1000logos.net/wp-content/uploads/2016/10/Batman-Logo-1939.png",
+      "data:image/svg+xml,%3csvg%20class='css-ze2te4%20css-qd6ojx'%20viewBox='0%200%20100%2087.4823698039547'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20transform='translate(-2.89139620338093,%20-8.991537183074797)%20scale(0.35260930129705087)'%20class='css-1e98oqk'%20fill='%23ffffff'%3e%3cg%3e%3cpath%20d='M64.3,132.1l78.8,136.5c1.2,2.2-0.3,5-2.9,5H83.6c-3.2,0-6.1-1.7-7.8-4.5L9.4,154c-1.6-2.7-1.6-6.2,0-8.9L26.8,115h0.1%20l21.5-37.2h-0.1l15.9-27.5c13.1-22.6,45.5-24,59.8-2.2c0.3,0.5,0.6,0.9,0.9,1.4l85.5,148c0.1,0.1,0.2,0.2,0.2,0.3%20c10.2,17.4,35.3,17.1,45.4-0.3l7.7-13.3c-11.6-0.6-22.1-6.9-27.9-17.1L157,30.5c-1.2-2.2,0.3-5,2.9-5h56.5c3.2,0,6.1,1.7,7.8,4.5%20l66.4,115c1.6,2.7,1.6,6.2,0,8.9l-7.7,13.3L243.8,235l-8.4,14.5c-13.1,22.6-45.7,23.6-59.5,1.4c-0.2-0.4-0.6-0.9-0.8-1.3l-85.5-148%20c-0.1-0.1-0.2-0.2-0.2-0.3c-10.2-17.3-35.3-17-45.3,0.3L36.3,115C48,115.6,58.5,122,64.3,132.1z'%3e%3c/path%3e%3c/g%3e%3c/g%3e%3c/svg%3e",
     restourantName: invoice.restourantName,
     restourantAddress: invoice.restourantAddress,
     orderDate: invoice.orderDate,
