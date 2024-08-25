@@ -19,6 +19,7 @@ app.use(
       "https://crm.magicscale.in",
       "http://82.112.237.229",
       "http://kravy.magicscale.in",
+      "https://kravy.magicscale.in",
     ],
     methods: "GET,POST,PUT,DELETE,OPTIONS",
     allowedHeaders:
