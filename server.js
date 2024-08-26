@@ -20,6 +20,7 @@ app.use(
       "http://82.112.237.229",
       "http://kravy.magicscale.in",
       "https://kravy.magicscale.in",
+      "https://billing.magicscale.in",
     ],
     methods: "GET,POST,PUT,DELETE,OPTIONS",
     allowedHeaders:
