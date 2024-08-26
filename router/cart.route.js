@@ -7,12 +7,12 @@ const carts = express();
 // Create a new cart
 carts.post("/", Auth, async (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const {userId} = req.user;
     const {products} = req.body;
 
-   console.log(userId);
-   console.log(products);
+  //  console.log(userId);
+  //  console.log(products);
 
     const newCart = new Cart({
       userId,
@@ -65,7 +65,7 @@ carts.get("/find/:userId", Auth, async (req, res) => {
 // Get All Carts
 carts.get("/", Auth, async (req, res) => {
   const {userId} = req.user;
-  console.log(userId);
+  // console.log(userId);
   try {
     const allCarts = await Cart.find(userId ? {userId} : {});
     res.status(200).json(allCarts);

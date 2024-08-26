@@ -7,9 +7,9 @@ const orderTable = express();
 orderTable.post("/", Auth, async (req, res) => {
   try {
     const { userId } = req.user;
-    console.log("User:", userId);
+    // console.log("User:", userId);
 
-    console.log("Table:", req.body.table);
+    // console.log("Table:", req.body.table);
 
     const orderTable = await OrderTable.create({
       user: userId,
@@ -28,7 +28,7 @@ orderTable.post("/", Auth, async (req, res) => {
 orderTable.put("/", Auth, async (req, res) => {
   try {
     const { userId } = req.user;
-    console.log("User:", userId);
+    // console.log("User:", userId);
 
     let orderTable = await OrderTable.findOneAndUpdate(
       { user: userId },

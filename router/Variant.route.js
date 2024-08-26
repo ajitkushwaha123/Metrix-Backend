@@ -20,7 +20,7 @@ variant.post("/bulk-variant", Auth, async (req, res) => {
   res.status(200).json({
     message: "Variant added successfully",
   });
-  console.log(req.body);
+  // console.log(req.body);
 });
 
 
@@ -29,7 +29,7 @@ variant.get("/", Auth, async (req, res, next) => {
   try {
     const { userId } = req.user; 
 
-    console.log("userId", userId);
+    // console.log("userId", userId);
     const variants = await Variant.find({ user: userId }).select(
       "_id name user"
     );

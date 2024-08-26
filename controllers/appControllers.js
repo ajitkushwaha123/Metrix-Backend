@@ -68,7 +68,7 @@ export async function register(req, res) {
 //       product,
 //     });
 //   } catch (error) {
-//     console.error('Error creating product:', error);
+    // console.error('Error creating product:', error);
 //     res.status(500).json({
 //       success: false,
 //       message: 'Error creating product',
@@ -210,5 +210,5 @@ export async function resetPassword(req, res) {
 export async function weeklySales(req , res){
    const userId = req.user.userId;
 
-   console.log("userId" , userId);
+  //  console.log("userId" , userId);
 }

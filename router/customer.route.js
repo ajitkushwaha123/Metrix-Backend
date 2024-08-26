@@ -7,12 +7,12 @@ const customers = express();
 // Create a new Customer
 customers.get("/customer-detail", Auth, async (req, res) => {
   const userId = req.user.userId;
-  console.log("User ID:", userId);
+  // console.log("User ID:", userId);
 
   try {
     const customers = await Customer.find({ userId: req.user.userId });
 
-    console.log("Customers:", customers);
+    // console.log("Customers:", customers);
     const customerDetails = await Customer.aggregate([
       { $match: { userId: req.user.userId } },
       {
@@ -33,7 +33,7 @@ customers.get("/customer-detail", Auth, async (req, res) => {
       },
     ]);
 
-    console.log("Customer Details:", customerDetails);
+    // console.log("Customer Details:", customerDetails);
 
     const customerResData =
       customerDetails.length > 0
@@ -58,7 +58,7 @@ customers.get("/customer-detail", Auth, async (req, res) => {
 
 customers.get("/customer-graph" , Auth , async (req , res) => {
   const userId = req.user.userId;
-  console.log(userId);
+  // console.log(userId);
 
   try {
     const today = new Date();
@@ -66,7 +66,7 @@ customers.get("/customer-graph" , Auth , async (req , res) => {
     const startOfSevenDaysAgo = new Date(startOfToday);
     startOfSevenDaysAgo.setDate(startOfSevenDaysAgo.getDate() - 6);
 
-    console.log(startOfSevenDaysAgo);
+    // console.log(startOfSevenDaysAgo);
 
     const customerData = await Customer.aggregate([
       {
@@ -97,7 +97,7 @@ customers.get("/customer-graph" , Auth , async (req , res) => {
 customers.post("/", Auth, async (req, res) => {
   try {
     const { userId } = req.user;
-    console.log(userId);
+    // console.log(userId);
     const { customerName, phone, imageColor , OrderPrice, status , customerImage, products } = req.body;
     const newCustomer = new Customer({
       userId: userId,
@@ -146,7 +146,7 @@ customers.delete("/:id", Auth, async (req, res) => {
 // Get Customers
 customers.get("/find/:Id", Auth, async (req, res) => {
   try {
-    console.log(req.params.Id);
+    // console.log(req.params.Id);
     const customer = await Customer.findById(req.params.Id);
     res.status(200).json(customer);
   } catch (err) {
@@ -160,7 +160,7 @@ customers.get("/find/:Id", Auth, async (req, res) => {
 // Get all customers
 customers.get("/", Auth, async (req, res) => {
   try {
-    console.log(req.user.userId);
+    // console.log(req.user.userId);
     const customers = await Customer.find({ userId: req.user.userId }).sort({
       createdAt: -1,
     });;

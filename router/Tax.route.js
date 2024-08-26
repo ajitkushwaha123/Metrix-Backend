@@ -21,7 +21,7 @@ tax.post("/bulk-tax", Auth, async (req, res) => {
   res.status(200).json({
     message: "Tax added successfully",
   });
-  console.log(req.body);
+  // console.log(req.body);
 });
 
 // GET all Tax
@@ -29,7 +29,7 @@ tax.get("/", Auth, async (req, res, next) => {
   try {
     const { userId } = req.user;
 
-    console.log("userId", userId);
+    // console.log("userId", userId);
     const taxes = await Tax.find({ user: userId }).select(
       "_id name taxPercentage user"
     );
@@ -38,7 +38,7 @@ tax.get("/", Auth, async (req, res, next) => {
       taxes,
     });
   } catch (err) {
-    console.error(err);
+    // console.error(err);
     res.status(500).json({
       error: err.message,
     });

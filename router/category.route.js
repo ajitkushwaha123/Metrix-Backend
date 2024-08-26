@@ -6,7 +6,6 @@ import { v2 as cloudinary } from "cloudinary";
 import { upload } from "../middleware/multer.js";
 import UserModel from "../models/User.models.js";
 import UserModels from "../models/User.models.js";
-// import ENV from "../config.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -33,7 +32,7 @@ category.post("/bulk-category" , Auth , async (req , res) => {
   res.status(200).json({
     message: "Categories added successfully"
   })
-  console.log(req.body);
+  // console.log(req.body);
 })
 
 category.post("/", upload.single("photo"), Auth, async (req, res, next) => {
@@ -44,7 +43,7 @@ category.post("/", upload.single("photo"), Auth, async (req, res, next) => {
       const filePath = req.file.path;
       const result = await cloudinary.uploader.upload(filePath);
 
-      console.log("userId", userId);
+      // console.log("userId", userId);
       const user = await UserModel.findOne({ userId });
       if (!user) {
         return res.status(404).send({ error: "Username not found" });
@@ -56,7 +55,7 @@ category.post("/", upload.single("photo"), Auth, async (req, res, next) => {
       });
 
        const category = req.user;
-       console.log("category", category);
+      //  console.log("category", category);
 
       await newCategory.save();
       res.status(200).json({
@@ -69,7 +68,7 @@ category.post("/", upload.single("photo"), Auth, async (req, res, next) => {
       });
 
       const category = req.user;
-      console.log("category", category);
+      // console.log("category", category);
 
       await newCategory.save();
       res.status(200).json({
@@ -89,7 +88,7 @@ category.get("/", Auth, async (req, res, next) => {
   try {
     const { userId } = req.user; // Adjust this based on your user model
 
-    console.log("userId", userId);
+    // console.log("userId", userId);
     const categories = await Category.find({ user: userId }).select(
       "_id name photo user"
     );
@@ -127,11 +126,11 @@ category.get("/:id", Auth, (req, res, next) => {
 
 // update
 category.put("/:id", upload.single("photo"), Auth, async (req, res, next) => {
-  console.log(req.params.id);
+  // console.log(req.params.id);
   const file = req.file;
-  console.log(file);
+  // console.log(file);
   const result = await cloudinary.uploader.upload(req.file.path);
-  console.log(result);
+  // console.log(result);
   Category.findOneAndUpdate(
     { _id: req.params.id },
     {

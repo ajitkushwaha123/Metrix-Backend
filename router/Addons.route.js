@@ -20,7 +20,7 @@ addons.post("/bulk-addons", Auth, async (req, res) => {
   res.status(200).json({
     message: "Addons added successfully",
   });
-  console.log(req.body);
+  // console.log(req.body);
 });
 
 // GET all Addons
@@ -28,7 +28,7 @@ addons.get("/", Auth, async (req, res, next) => {
   try {
     const { userId } = req.user;
 
-    console.log("userId", userId);
+    // console.log("userId", userId);
     const addons = await Addons.find({ user: userId }).select(
       "_id name user"
     );

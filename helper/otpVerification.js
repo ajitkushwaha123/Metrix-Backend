@@ -1,6 +1,6 @@
 const verifyOtp = async (otpTime) => {
   try {
-    console.log("MilliSecond is:", otpTime);
+    // console.log("MilliSecond is:", otpTime);
 
     const cDateTime = new Date();
     let differenceValue = (otpTime - cDateTime.getTime()) / 1000;
@@ -8,7 +8,7 @@ const verifyOtp = async (otpTime) => {
 
     const minutes = Math.abs(differenceValue);
 
-    console.log("Expired Minutes:", minutes);
+    // console.log("Expired Minutes:", minutes);
 
     if (minutes > 10) {
       return true;

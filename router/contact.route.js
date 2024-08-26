@@ -15,7 +15,7 @@ contact.post("/" , async (req , res) => {
 
         await newContact.save();
 
-        console.log(newContact);
+        // console.log(newContact);
 
         return res.status(200).json({
           success: true,

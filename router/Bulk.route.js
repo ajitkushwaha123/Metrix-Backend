@@ -1,15 +1,13 @@
 import bodyParser from "body-parser";
-import express, { response } from "express";
+import express from "express";
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
-import { upload } from "../middleware/multer.js";
-import {Product} from "../models/Product.model.js";
+import { Product } from "../models/Product.model.js";
 import csv from "csvtojson";
 import Auth from "../middleware/auth.js";
 import { Category } from "../models/Category.models.js";
 
-// Helper function to get __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -27,9 +25,17 @@ const storage = multer.diskStorage({
   },
 });
 
-const uploadMiddleware = multer({ storage });
+const uploadMiddleware = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype !== "text/csv") {
+      return cb(new Error("Only CSV files are allowed"), false);
+    }
+    cb(null, true);
+  },
+});
 
-// POST request
 bulkupload.post(
   "/upload",
   uploadMiddleware.single("file"),
@@ -38,45 +44,40 @@ bulkupload.post(
     const file = req.file;
     const userId = req.user.userId;
 
-    console.log("File:", userId);
-
-    console.log("User ID:", userId);
     if (!file) {
-      const error = new Error("Please choose a file");
-      error.httpStatusCode = 400;
-      return next(error);
+      return res.status(400).send({ error: "Please choose a file" });
     }
 
     try {
+      const response = await csv().fromFile(file.path);
       let userData = [];
 
-      const response = await csv().fromFile(file.path);
-      // console.log(response);
-
       for (let i = 0; i < response.length; i++) {
-         const foundCategory = await Category.findOne({ name: response[i].Category });
-         const categoryID = foundCategory ? foundCategory._id : null;
+        const { Name, Category: categoryName, Price, Stock, Photos } = response[i];
+
+        // Validate required fields
+        if (!Name || !categoryName || !Price) {
+          return res.status(402).send({ error: "Missing required fields in CSV" });
+        }
+
+        const foundCategory = await Category.findOne({ name: categoryName });
+        const categoryID = foundCategory ? foundCategory._id : null;
+
         userData.push({
-          productName: response[i].Name,
-          category: response[i].Category,
-          price: response[i].Price,
-          stock: response[i].Stock,
-          photos: [response[i].Photos],
+          productName: Name,
+          category: categoryName,
+          price: Price,
+          stock: Stock || 0, // Default to 0 if not provided
+          photos: Photos ? [Photos] : [], // Default to empty array if not provided
           status: "published",
           userId: userId,
           categoryId: categoryID,
         });
 
-        const categoryExists = await Category.findOne({
-          name: response[i].Category,
-        });
-
-
-
-        if (!categoryExists) {
+        if (!foundCategory) {
           const newCategory = new Category({
-            name: response[i].Category,
-            photo: response[i].Photos,
+            name: categoryName,
+            photo: Photos,
             user: userId,
           });
 
@@ -84,14 +85,12 @@ bulkupload.post(
         }
       }
 
-      // console.log(userData);
-      
       await Product.insertMany(userData);
 
       res.status(200).send({ success: "File uploaded successfully" });
     } catch (err) {
       console.error(err);
-      res.status(500).send(err.message);
+      res.status(500).send({ error: err.message });
     }
   }
 );

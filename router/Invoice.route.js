@@ -27,7 +27,7 @@ invoice.post("/create" , Auth, async (req, res) => {
 
 invoice.put("/edit/:id", Auth, async (req, res) => {
   const { userId } = req.user;
-  console.log("userId", userId);
+  // console.log("userId", userId);
 
   const invoiceId = req.params.id;
 
@@ -49,7 +49,7 @@ invoice.get("/pdf/:id", async (req, res) => {
       return res.status(404).send("Invoice not found");
     }
 
-    console.log("invoice", invoice);
+    // console.log("invoice", invoice);
 
     // const data = {
     //   createdAt: invoice.createdAt,
@@ -96,7 +96,7 @@ invoice.get("/invoice/:id", async (req, res) => {
     return res.status(404).send("Invoice not found");
   }
 
-  console.log("invoice", invoice);
+  // console.log("invoice", invoice);
 
   const invoiceData = {
     createdAt: invoice.createdAt,
@@ -119,7 +119,7 @@ invoice.get("/invoice/:id", async (req, res) => {
     discount: invoice.discount,
   };
 
-  console.log(invoiceData);
+  // console.log(invoiceData);
 
   try {
     const html = await ejs.renderFile(
@@ -174,7 +174,7 @@ invoice.get("/kot/:id", async (req, res) => {
     return res.status(404).send("Invoice not found");
   }
 
-  console.log("invoice", invoice);
+  // console.log("invoice", invoice);
 
   const invoiceData = {
     createdAt: invoice.createdAt,
@@ -191,7 +191,7 @@ invoice.get("/kot/:id", async (req, res) => {
     discount: invoice.discount,
   };
 
-  console.log(invoiceData);
+  // console.log(invoiceData);
 
   try {
     const html = await ejs.renderFile(

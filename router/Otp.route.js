@@ -33,7 +33,7 @@ otps.post("/", async (req, res) => {
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
-    console.log(accountSid);
+    // console.log(accountSid);
 
     // Send OTP via Twilio
     const message = await twilioClient.messages.create({

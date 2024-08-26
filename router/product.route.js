@@ -10,8 +10,8 @@ const products = express();
 products.get("/category/:id" , Auth , async (req , res) => {
   const userId = req.user.userId;
   const categoryId = req.params.id;
-  console.log("User ID:" , userId);
-  console.log("Category ID:" , categoryId);
+  // console.log("User ID:" , userId);
+  // console.log("Category ID:" , categoryId);
   try{
     const products = await Product.find({userId : userId , categoryId : categoryId});
     res.status(200).json(products);
@@ -24,13 +24,13 @@ products.get("/category/:id" , Auth , async (req , res) => {
 
 products.get("/", Auth, async (req, res) => {
   const {userId} = req.user;
-  console.log("query" , userId);
+  // console.log("query" , userId);
   try {
     const searchQuery = req.query.search;
-    console.log(searchQuery);
+    // console.log(searchQuery);
     let products;
     if (!searchQuery) {
-      console.log("No search query");
+      // console.log("No search query");
     }
     if (searchQuery) {
       products = await Product.find({
@@ -41,7 +41,7 @@ products.get("/", Auth, async (req, res) => {
       products = await Product.find({ userId: userId });
     }
 
-    console.log(products);
+    // console.log(products);
     res.status(200).json(products);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -50,10 +50,10 @@ products.get("/", Auth, async (req, res) => {
 
 products.get("/shortCode", Auth, async (req, res) => {
   const { userId } = req.user;
-  console.log("query", userId);
+  // console.log("query", userId);
   try {
     const searchQuery = req.query.search;
-    console.log(searchQuery);
+    // console.log(searchQuery);
     let products;
     if (!searchQuery) {
       console.log("No search query");
@@ -74,7 +74,7 @@ products.get("/shortCode", Auth, async (req, res) => {
 
 products.get("/data" , Auth , async (req , res) => {
   const userId = req.user.userId;
-  console.log("User ID:" , userId);
+  // console.log("User ID:" , userId);
   try{
     const products = await Product.find({userId : userId});
     res.status(200).json(products);
@@ -87,7 +87,7 @@ products.get("/data" , Auth , async (req , res) => {
 
 products.get("/size", Auth, async (req, res) => {
   const userId = req.user.userId;
-  console.log("User ID:", userId);
+  // console.log("User ID:", userId);
   try {
     const productData = await Product.aggregate([
       {
@@ -126,7 +126,7 @@ products.get("/size", Auth, async (req, res) => {
       },
     ]);
 
-    console.log(productData);
+    // console.log(productData);
     const productResData =
       productData.length > 0
         ? productData[0]
@@ -235,8 +235,8 @@ products.post("/", upload.array("photos", 4), Auth, async (req, res) => {
 products.put("/:id", upload.array("photos"), Auth, async (req, res, next) => {
   const { id } = req.params; 
 
-  console.log(id);
-  console.log(req.body);
+  // console.log(id);
+  // console.log(req.body);
 
   if (req.files && req.files.length > 0) {
     try {
@@ -244,11 +244,11 @@ products.put("/:id", upload.array("photos"), Auth, async (req, res, next) => {
         cloudinary.uploader.upload(file.path)
       );
       const results = await Promise.all(uploadPromises);
-      console.log("results", results);
+      // console.log("results", results);
 
       const photoUrls = results.map((result) => result.url);
       req.body.photos = photoUrls; 
-      console.log("body", req.body);
+      // console.log("body", req.body);
     } catch (error) {
       return res.status(500).json({ error: "Error uploading photos" });
     }
@@ -262,7 +262,7 @@ products.put("/:id", upload.array("photos"), Auth, async (req, res, next) => {
       },
       { new: true }
     );
-    console.log("updatedProduct", updatedProduct);
+    // console.log("updatedProduct", updatedProduct);
     if (!updatedProduct) {
       return res.status(404).json({ error: "Product not found" });
     }

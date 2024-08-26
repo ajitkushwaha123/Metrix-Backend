@@ -8,7 +8,7 @@ const orders = express();
 orders.get("/sales", Auth, async (req, res) => {
   console.log("Fetching sales data...");
   const { userId } = req.user;
-  console.log("User ID:", userId);
+  // console.log("User ID:", userId);
 
   try {
     const startOfDay = new Date();
@@ -421,10 +421,10 @@ orders.get("/sales", Auth, async (req, res) => {
       },
     ]);
 
-    console.log("Monthly sales:", monthlySales);
-    console.log("Yearly sales:", yearlySales);
-    console.log("Total sales:", totalSales);
-    console.log("Total sales:", totalSales);
+    // console.log("Monthly sales:", monthlySales);
+    // console.log("Yearly sales:", yearlySales);
+    // console.log("Total sales:", totalSales);
+    // console.log("Total sales:", totalSales);
 
     const dailySalesData =
       dailySales.length > 0
@@ -522,14 +522,14 @@ orders.get("/sales", Auth, async (req, res) => {
             orderTypeHomeDelivery: 0,
           };
 
-    console.log("Daily sales:", dailySalesData);
-    console.log("Yesterday Sales", yesterdaySalesData);
-    console.log("Weekly sales:", weeklySalesData);
-    console.log("Last Week Sales:", lastWeekSalesData);
-    console.log("Monthly sales:", monthlySalesData);
-    console.log("Last Month Sales:", lastMonthSalesData);
-    console.log("Yearly sales:", yearlySalesData);
-    console.log("Total sales:", totalSalesData);
+    // console.log("Daily sales:", dailySalesData);
+    // console.log("Yesterday Sales", yesterdaySalesData);
+    // console.log("Weekly sales:", weeklySalesData);
+    // console.log("Last Week Sales:", lastWeekSalesData);
+    // console.log("Monthly sales:", monthlySalesData);
+    // console.log("Last Month Sales:", lastMonthSalesData);
+    // console.log("Yearly sales:", yearlySalesData);
+    // console.log("Total sales:", totalSalesData);
 
     let percentageImprovement = 0;
 
@@ -567,9 +567,9 @@ orders.get("/sales", Auth, async (req, res) => {
         100;
     }
 
-    console.log(
-      `Sales improved by ${percentageImprovement.toFixed(2)}% from yesterday.`
-    );
+    // console.log(
+    //   `Sales improved by ${percentageImprovement.toFixed(2)}% from yesterday.`
+    // );
 
     const roundedYesterdayPercentageImprovement =
       percentageImprovement.toFixed(2);
@@ -580,11 +580,11 @@ orders.get("/sales", Auth, async (req, res) => {
     const roundedYearlyPercentageImprovement =
       yearlyPercentageImprovement.toFixed(2);
 
-    console.log({
-      weeklyPercentageImprovement: roundedWeeklyPercentageImprovement,
-      monthlyPercentageImprovement: roundedMonthlyPercentageImprovement,
-      yearlyPercentageImprovement: roundedYearlyPercentageImprovement,
-    });
+    // console.log({
+    //   weeklyPercentageImprovement: roundedWeeklyPercentageImprovement,
+    //   monthlyPercentageImprovement: roundedMonthlyPercentageImprovement,
+    //   yearlyPercentageImprovement: roundedYearlyPercentageImprovement,
+    // });
 
 
     res.json({
@@ -644,8 +644,8 @@ orders.get("/sales-graph", Auth, async (req, res) => {
 
 orders.get("/single/:productId", Auth, async (req, res) => {
   try {
-    console.log("Fetching order...");
-    console.log(req.params.productId);
+    // console.log("Fetching order...");
+    // console.log(req.params.productId);
     
     const order = await Order.findById(req.params.productId);
     if (!order) {
@@ -787,7 +787,7 @@ orders.get("/", Auth, async (req, res) => {
 // Get all orders based on Customer Id;
 orders.get("/customer/:customerId", Auth, async (req, res) => {
   try {
-    console.log(req.params.customerId);
+    // console.log(req.params.customerId);
     const orders = await Order.find({
       customerId: req.params.customerId,
     });

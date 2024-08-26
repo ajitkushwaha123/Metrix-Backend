@@ -8,7 +8,7 @@ const discount = express();
 discount.post("/bulk-discount", Auth, async (req, res) => {
   const { userId } = req.user;
 
-  console.log("userId", req.body);
+  // console.log("userId", req.body);
 
   for (let i = 0; i < req.body.length; i++) {
     const newDiscount = new Discount({
@@ -24,7 +24,7 @@ discount.post("/bulk-discount", Auth, async (req, res) => {
   res.status(200).json({
     message: "Discount added successfully",
   });
-  console.log(req.body);
+  // console.log(req.body);
 });
 
 // GET all Discount
@@ -32,7 +32,7 @@ discount.get("/", Auth, async (req, res, next) => {
   try {
     const { userId } = req.user;
 
-    console.log("userId", userId);
+    // console.log("userId", userId);
     const discounts = await Discount.find({ user: userId }).select("_id name couponType couponValue user");
 
     res.status(200).json({
