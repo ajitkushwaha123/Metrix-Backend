@@ -148,7 +148,7 @@ invoice.get("/invoice/:id", async (req, res) => {
     await page.pdf({
       path: pdfPath,
       width: "4in",
-      height: `${contentHeight}px`, 
+      height: `${contentHeight + 30}px`, 
       printBackground: true,
       margin: { top: "10px", right: "10px", bottom: "10px", left: "10px" }, // Reduced margins
       scale: 1, 
