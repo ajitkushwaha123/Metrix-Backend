@@ -18,7 +18,7 @@ import discount from "./Discount.route.js";
 import invoice from "./Invoice.route.js";
 import otps from "./Otp.route.js";
 import contact from "./contact.route.js";
-
+import support from "./Support.route.js";
 
 const router = Router();
 
@@ -59,5 +59,6 @@ router.use("/discount" , discount);
 router.use("/invoice" , invoice);
 router.use("/otp", otps);
 router.use("/contact" , contact);
+router.use("/support" , support);
 
 export default router;
