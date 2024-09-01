@@ -10,8 +10,7 @@ const products = express();
 products.get("/category/:id" , Auth , async (req , res) => {
   const userId = req.user.userId;
   const categoryId = req.params.id;
-  // console.log("User ID:" , userId);
-  // console.log("Category ID:" , categoryId);
+  
   try{
     const products = await Product.find({userId : userId , categoryId : categoryId});
     res.status(200).json(products);

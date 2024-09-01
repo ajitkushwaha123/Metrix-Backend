@@ -5,7 +5,6 @@ import { Category } from "../models/Category.models.js";
 import { v2 as cloudinary } from "cloudinary";
 import { upload } from "../middleware/multer.js";
 import UserModel from "../models/User.models.js";
-import UserModels from "../models/User.models.js";
 import dotenv from "dotenv";
 dotenv.config();
 

@@ -19,6 +19,7 @@ import invoice from "./Invoice.route.js";
 import otps from "./Otp.route.js";
 import contact from "./contact.route.js";
 import support from "./Support.route.js";
+import gemini from "./Gemini.route.js";
 
 const router = Router();
 
@@ -60,5 +61,6 @@ router.use("/invoice" , invoice);
 router.use("/otp", otps);
 router.use("/contact" , contact);
 router.use("/support" , support);
+router.use("/gemini" , gemini);
 
 export default router;
