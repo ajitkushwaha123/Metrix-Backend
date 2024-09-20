@@ -21,6 +21,7 @@
     "easyinvoice": "^3.0.47",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "express-validator": "^7.2.0",
     "html-pdf": "^3.0.1",
     "jsonwebtoken": "^9.0.2",
     "mailgen": "^2.0.28",

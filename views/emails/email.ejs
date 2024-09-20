@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reset Password</title>
+    <style>
+      body {
+        width: 100%;
+        background-color: #c6c6c6;
+        color: #333333;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 640px;
+        padding: 32px 24px;
+        margin: 0 auto;
+        background-color: #fff;
+      }
+      header img {
+        height: 56px;
+      }
+      main {
+        margin-top: 32px;
+      }
+      h2 {
+        color: #4a5568;
+      }
+      p {
+        margin-top: 8px;
+        line-height: 1.6;
+        color: #718096;
+      }
+      .verification-code {
+        display: flex;
+        align-items: center;
+        margin-top: 16px;
+        gap: 16px;
+      }
+      .verification-code p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+        font-weight: 500;
+        color: #4299e1;
+        border: 1px solid #4299e1;
+        border-radius: 8px;
+      }
+      button {
+        padding: 12px 24px;
+        margin-top: 24px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #ffffff;
+        background-color: #3182ce;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #2b6cb0;
+      }
+      footer {
+        margin-top: 32px;
+        color: #a0aec0;
+      }
+      footer a {
+        color: #4299e1;
+        text-decoration: none;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="container">
+      <header>
+        <a href="#">
+          <img
+            src="http://cdn.mcauto-images-production.sendgrid.net/696be97af536979c/57ddaff8-3b57-4749-9a7b-ec2b78e0dd93/1000x375.png"
+            alt="Meraki UI Logo"
+          />
+        </a>
+      </header>
+
+      <main>
+        <h2>Hi <%= userName %>,</h2>
+
+        <p>This is your verification code:</p>
+
+        <div class="verification-code">
+          <% verificationCode.split('').forEach(function(digit) { %>
+          <p><%= digit %></p>
+          <% }); %>
+        </div>
+
+        <p>
+          This code will only be valid for the next 5 minutes. If the code does
+          not work, you can use this login verification link:
+        </p>
+
+        <button>Verify email</button>
+
+        <p>
+          Thanks, <br />
+          Meraki UI team
+        </p>
+      </main>
+
+      <footer>
+        <p>
+          This email was sent to
+          <a href="#" target="_blank"><%= userEmail %></a>. If you'd rather not
+          receive this kind of email, you can
+          <a href="#">unsubscribe</a> or
+          <a href="#">manage your email preferences</a>.
+        </p>
+
+        <p>
+          © <%= new Date().getFullYear() %> Meraki UI. All Rights Reserved.
+        </p>
+      </footer>
+    </section>
+  </body>
+</html>

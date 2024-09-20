@@ -2,13 +2,24 @@ import mongoose from "mongoose";
 
 const otpSchema = new mongoose.Schema(
   {
+    email: {
+      type: String,
+    },
     phoneNumber: {
       type: String,
-      required: true,
+    },
+    username : {
+      type : String,
+    },
+    password : {
+      type : String,
     },
     otp: {
       type: String,
-      required: true,
+    },
+    mailVarified : {
+      type : Boolean,
+      default : false
     },
     otpExpiration: {
       type: Date,

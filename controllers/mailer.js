@@ -1,62 +1,82 @@
-import nodemailer from 'nodemailer';
-import Mailgen from 'mailgen';
-// import ENV from '../config.js';
-
+import nodemailer from "nodemailer";
+import Mailgen from "mailgen";
 import dotenv from "dotenv";
+import UserModel from "../models/User.models.js";
+import ejs from "ejs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 dotenv.config();
 
 const nodeConfig = {
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // Use `true` for port 465, `false` for all other ports
-    auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
-    },
+  host: "smtp.hostinger.com",
+  port: 465,
+  secure: true, // Use `true` for port 465, `false` for all other ports
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
 };
-
-
-// {
-//   "username" : "exmaple123",
-//   "userEmail" : "admin123",
-//   "text" : "",
-//   "subject" : "",  
-// }
 
 const transporter = nodemailer.createTransport(nodeConfig);
 
 const MailGenerator = new Mailgen({
-    theme: "default",
-    product: {
-        name: "Mailgen",
-        link: "https://mailgen.js",
-    },
+  theme: "default",
+  product: {
+    name: "Mailgen",
+    link: "https://mailgen.js",
+  },
 });
 
-export const registerMail = async (req, res) => {
-    try {
-        const { username, userEmail, text, subject } = req.body;
+export const registerMail = async (req, res, next) => {
+  try {
+    let { username, email, subject } = req.body; // Changed `const` to `let`
+    const code = req.otp;
 
-        const email = {
-            body: {
-                name: username,
-                intro: text || 'Dummy paragraph',
-                outro: 'Duummmmmyyyyy2',
-            },
-        };
-
-        const emailBody = MailGenerator.generate(email);
-
-        const message = {
-            from: process.env.EMAIL,
-            to: userEmail,
-            subject: subject || "Registration Success",
-            html: emailBody,
-        };
-
-        await transporter.sendMail(message);
-        return res.status(200).send({ msg: "You should receive an email" });
-    } catch (error) {
-        return res.status(500).send({ error: "Error sending email" });
+    if (!email) {
+      return res.status(400).send({ error: "Email is required" });
     }
+
+    if (!username) {
+      const emailExist = await UserModel.findOne({ email: email });
+      if (emailExist) {
+        username = emailExist.username;
+      }
+    }
+
+    // Path to the EJS template
+    const templatePath = path.join(__dirname, "../views/emails/email.ejs");
+
+    // Render the EJS template
+    let emailBody = await ejs.renderFile(templatePath, {
+      userName: username,
+      userEmail: email,
+      verificationCode: code,
+    });
+
+    const message = {
+      from: `"Support" <support@magicscale.in>`, // Use alias email address here
+      to: email,
+      subject: subject || "Registration Success",
+      html: emailBody,
+    };
+
+    await transporter.sendMail(message);
+    console.log("Email sent successfully");
+    res.status(200).send({ msg: "You should receive an email" });
+    next();
+  } catch (error) {
+    console.error("Error sending email:", error); // Log the error details
+    if (!res.headersSent) {
+      return res
+        .status(500)
+        .send({ error: "Error sending email", details: error.message });
+    }
+  }
 };
