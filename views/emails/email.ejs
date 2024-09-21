@@ -44,6 +44,7 @@
         font-size: 24px;
         font-weight: 500;
         color: #4299e1;
+        text-align: center;
         border: 1px solid #4299e1;
         border-radius: 8px;
       }
@@ -73,16 +74,34 @@
       footer a:hover {
         text-decoration: underline;
       }
+
+      .btn{
+        display: flex;
+      }
+      .btn-2{
+        padding: 12px 24px;
+        margin-top: 24px;
+        font-size: 14px;
+        font-weight: 500;
+        border: #3182ce 2px solid;
+        color: #3182ce;
+        background-color: #ffffff;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-left: 10px;
+      }
+
+      .btn-2:hover {
+        color: #ffffff;
+      }
     </style>
   </head>
   <body>
     <section class="container">
       <header>
         <a href="#">
-          <img
-            src="http://cdn.mcauto-images-production.sendgrid.net/696be97af536979c/57ddaff8-3b57-4749-9a7b-ec2b78e0dd93/1000x375.png"
-            alt="Meraki UI Logo"
-          />
+          <img src="https://i.ibb.co/JBr8Rp2/kravy-Logo.png" alt="Kravy Logo" />
         </a>
       </header>
 
@@ -98,15 +117,15 @@
         </div>
 
         <p>
-          This code will only be valid for the next 5 minutes. If the code does
-          not work, you can use this login verification link:
+          This code will only be valid for the next 10 minutes. If the code does
+          not work, you can request a new one or contact support.
         </p>
 
-        <button>Verify email</button>
+        <div class="btn"><a href="https://kravy.magicscale.in"><button>Request New OTP</button></a> <a href="https://kravy.magicscale.in/support"><button class="btn-2">Connect Support</button></a></div>
 
         <p>
           Thanks, <br />
-          Meraki UI team
+          Kravy ...!
         </p>
       </main>
 
@@ -114,14 +133,11 @@
         <p>
           This email was sent to
           <a href="#" target="_blank"><%= userEmail %></a>. If you'd rather not
-          receive this kind of email, you can
-          <a href="#">unsubscribe</a> or
+          receive this kind of email, you can <a href="#">unsubscribe</a> or
           <a href="#">manage your email preferences</a>.
         </p>
 
-        <p>
-          © <%= new Date().getFullYear() %> Meraki UI. All Rights Reserved.
-        </p>
+        <p>© <%= new Date().getFullYear() %> Kravy. All Rights Reserved.</p>
       </footer>
     </section>
   </body>
