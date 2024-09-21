@@ -5,15 +5,15 @@
     <style>
       body {
         width: 100%;
-        background-color: #c6c6c6;
+        background-color: #005ff7;
         color: #333333;
-        font-family: Arial, sans-serif;
+        font-family: poppins;
       }
       .container {
         max-width: 640px;
         padding: 32px 24px;
         margin: 0 auto;
-        background-color: #fff;
+        background-color: #ffffff;
       }
       header img {
         height: 56px;
@@ -47,6 +47,7 @@
         text-align: center;
         border: 1px solid #4299e1;
         border-radius: 8px;
+        padding-left: auto;
       }
       button {
         padding: 12px 24px;
@@ -93,12 +94,29 @@
       }
 
       .btn-2:hover {
-        color: #ffffff;
+        color: #F8F8FF;
+      }
+
+      .mail{
+        background-color: #F8F8FF;
+        padding: 20px 0px 20px 0px;
+        overflow-y: hidden;
+        border-radius: 20px;
+        width: 100%;
+      }
+
+      .digi{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: auto;
+        padding-right: auto;
       }
     </style>
   </head>
   <body>
-    <section class="container">
+    <div class="mail">
+      <section class="container">
       <header>
         <a href="#">
           <img src="https://i.ibb.co/JBr8Rp2/kravy-Logo.png" alt="Kravy Logo" />
@@ -112,7 +130,7 @@
 
         <div class="verification-code">
           <% verificationCode.split('').forEach(function(digit) { %>
-          <p><%= digit %></p>
+          <p class="digi"><%= digit %></p>
           <% }); %>
         </div>
 
@@ -140,5 +158,6 @@
         <p>© <%= new Date().getFullYear() %> Kravy. All Rights Reserved.</p>
       </footer>
     </section>
+    </div>
   </body>
 </html>

@@ -273,7 +273,6 @@ products.put("/:id", upload.array("photos"), Auth, async (req, res, next) => {
 
 //Delete
 products.delete("/:id", Auth, async (req, res) => {
-  // const newProduct = new Product(req.body);
 
   try {
     await Product.findByIdAndDelete(req.params.id);
