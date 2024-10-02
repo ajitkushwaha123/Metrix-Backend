@@ -20,8 +20,8 @@ import contact from "./contact.route.js";
 import support from "./Support.route.js";
 import gemini from "./Gemini.route.js";
 import { body } from "express-validator";
-
 const router = Router();
+
 
 // POST: Register user
 router.route("/generate-mail").post(controller.generateOTP, registerMail);

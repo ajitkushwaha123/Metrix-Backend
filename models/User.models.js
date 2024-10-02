@@ -23,9 +23,23 @@ const UserSchema = new mongoose.Schema({
   address: { type: String },
   profile: { type: String },
   city: {type  : String},
+  gst : {type : String},
+  pan : {type : String},
   role:{
     type : String,
     default : "CUSTOMER",
+  },
+  subscription : {
+    type : String,
+    default : "FREE",
+  },
+  subscriptionStatus : {
+    type : String,
+    default : "ACTIVE",
+  },
+  subscriptionStartDate : {
+    type : Date,
+    default : Date.now(),
   },
   paymentInformation : [
     {

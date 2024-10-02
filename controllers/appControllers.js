@@ -104,13 +104,13 @@ export async function login(req, res) {
 
   try {
     const user = await UserModel.findOne({ username });
-    const emailfound = await UserModel.findOne({ email: username }); 
+    const emailfound = await UserModel.findOne({ email: username });
 
     if (!user && !emailfound) {
       return res.status(404).send({ error: "Username or email not found" });
     }
 
-    const userToCheck = user || emailfound; 
+    const userToCheck = user || emailfound;
 
     const passwordCheck = await bcrypt.compare(password, userToCheck.password);
     if (!passwordCheck) {
@@ -126,6 +126,15 @@ export async function login(req, res) {
       process.env.JWT_SECRET,
       { expiresIn: "24h" }
     );
+
+    // Set the token in a cookie
+    const cook = res.cookie("token", token, {
+      httpOnly: true, // Ensures the cookie is sent only over HTTP(S), not accessible via JavaScript
+      secure: process.env.NODE_ENV === "production", // Ensures the cookie is sent only over HTTPS in production
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    });
+
+    console.log("cookie:", cook);
 
     return res.status(200).send({
       msg: "Login Successful",
