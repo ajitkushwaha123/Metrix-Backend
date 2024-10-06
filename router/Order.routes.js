@@ -81,7 +81,11 @@ orders.get("/sales", Auth, async (req, res) => {
       {
         $group: {
           _id: null,
-          totalSales: { $sum: "$price" },
+          totalSales: {
+            $sum: {
+              $cond: [{ $ne: ["$orderStatus", "cancelled"] }, "$price", 0],
+            },
+          },
           totalOrders: { $sum: 1 },
           totalCompleted: {
             $sum: {
@@ -132,7 +136,11 @@ orders.get("/sales", Auth, async (req, res) => {
       {
         $group: {
           _id: null,
-          totalSales: { $sum: "$price" },
+          totalSales: {
+            $sum: {
+              $cond: [{ $ne: ["$orderStatus", "cancelled"] }, "$price", 0],
+            },
+          },
           totalOrders: { $sum: 1 },
           totalCompleted: {
             $sum: {
@@ -183,7 +191,11 @@ orders.get("/sales", Auth, async (req, res) => {
       {
         $group: {
           _id: null,
-          totalSales: { $sum: "$price" },
+          totalSales: {
+            $sum: {
+              $cond: [{ $ne: ["$orderStatus", "cancelled"] }, "$price", 0],
+            },
+          },
           totalOrders: { $sum: 1 },
           totalCompleted: {
             $sum: {
@@ -234,7 +246,11 @@ orders.get("/sales", Auth, async (req, res) => {
       {
         $group: {
           _id: null,
-          totalSales: { $sum: "$price" },
+          totalSales: {
+            $sum: {
+              $cond: [{ $ne: ["$orderStatus", "cancelled"] }, "$price", 0],
+            },
+          },
         },
       },
     ]);
@@ -249,7 +265,11 @@ orders.get("/sales", Auth, async (req, res) => {
       {
         $group: {
           _id: null,
-          totalSales: { $sum: "$price" },
+          totalSales: {
+            $sum: {
+              $cond: [{ $ne: ["$orderStatus", "cancelled"] }, "$price", 0],
+            },
+          },
         },
       },
     ]);
@@ -264,7 +284,11 @@ orders.get("/sales", Auth, async (req, res) => {
       {
         $group: {
           _id: null,
-          totalSales: { $sum: "$price" },
+          totalSales: {
+            $sum: {
+              $cond: [{ $ne: ["$orderStatus", "cancelled"] }, "$price", 0],
+            },
+          },
           totalOrders: { $sum: 1 },
           totalCompleted: {
             $sum: {
@@ -315,7 +339,11 @@ orders.get("/sales", Auth, async (req, res) => {
       {
         $group: {
           _id: null,
-          totalSales: { $sum: "$price" },
+          totalSales: {
+            $sum: {
+              $cond: [{ $ne: ["$orderStatus", "cancelled"] }, "$price", 0],
+            },
+          },
           totalOrders: { $sum: 1 },
           totalCompleted: {
             $sum: {
@@ -366,7 +394,11 @@ orders.get("/sales", Auth, async (req, res) => {
       {
         $group: {
           _id: null,
-          totalSales: { $sum: "$price" },
+          totalSales: {
+            $sum: {
+              $cond: [{ $ne: ["$orderStatus", "cancelled"] }, "$price", 0],
+            },
+          },
         },
       },
     ]);
@@ -380,7 +412,11 @@ orders.get("/sales", Auth, async (req, res) => {
       {
         $group: {
           _id: null,
-          totalSales: { $sum: "$price" },
+          totalSales: {
+            $sum: {
+              $cond: [{ $ne: ["$orderStatus", "cancelled"] }, "$price", 0],
+            },
+          },
           totalOrders: { $sum: 1 },
           totalCompleted: {
             $sum: {
@@ -726,6 +762,7 @@ orders.put("/:id", Auth, async (req, res) => {
       },
       { new: true }
     );
+    console.log(updatedOrder)
     res.status(200).json(updatedOrder);
   } catch (err) {
     res.status(500).json(err);

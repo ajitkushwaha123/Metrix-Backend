@@ -47,7 +47,10 @@ const OrderSchema = new mongoose.Schema(
     },
     totalAmount : {
       type : Number,
-    }
+    },
+    orderRejectionReason : {
+      type : String,
+    },
   },
   { timestamps: true }
 );

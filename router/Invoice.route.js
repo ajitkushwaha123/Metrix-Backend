@@ -240,5 +240,22 @@ invoice.get("/kot/:id", async (req, res) => {
   }
 });
 
+invoice.put("/kot/edit/:id", Auth, async (req, res) => {
+  const { userId } = req.user;
+  // console.log("userId", userId);
+
+  const invoiceId = req.params.id;
+
+  let updatedInvoice = await Invoice.findOneAndUpdate(
+    { _id: invoiceId },
+    { $set: req.body },
+    { new: true }
+  );
+
+  console.log("updatedInvoice" , updatedInvoice);
+
+  res.status(200).json({ invoice: updatedInvoice });
+});
+
 
 export default invoice;
