@@ -1,14 +1,13 @@
 import { Order } from "../models/Order.models.js";
 import Auth from "../middleware/auth.js";
 import express from "express";
-import moment from "moment";
+import { Counter } from "../models/Counter.model.js";
 
 const orders = express();
 
 orders.get("/sales", Auth, async (req, res) => {
   console.log("Fetching sales data...");
   const { userId } = req.user;
-  // console.log("User ID:", userId);
 
   try {
     const startOfDay = new Date();
@@ -622,7 +621,6 @@ orders.get("/sales", Auth, async (req, res) => {
     //   yearlyPercentageImprovement: roundedYearlyPercentageImprovement,
     // });
 
-
     res.json({
       dailySales: dailySalesData,
       yesterdaySales: yesterdaySalesData,
@@ -644,7 +642,7 @@ orders.get("/sales", Auth, async (req, res) => {
 
 orders.get("/sales-graph", Auth, async (req, res) => {
   const userId = req.user.userId;
-  
+
   try {
     const today = new Date();
     const startOfToday = new Date(today.setHours(0, 0, 0, 0));
@@ -682,7 +680,7 @@ orders.get("/single/:productId", Auth, async (req, res) => {
   try {
     // console.log("Fetching order...");
     // console.log(req.params.productId);
-    
+
     const order = await Order.findById(req.params.productId);
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
@@ -695,7 +693,6 @@ orders.get("/single/:productId", Auth, async (req, res) => {
       .json({ message: "Failed to fetch order", error: err.message });
   }
 });
-
 
 // Create a new Order
 orders.post("/", Auth, async (req, res) => {
@@ -719,9 +716,20 @@ orders.post("/", Auth, async (req, res) => {
       discount,
       tax,
       discountType,
-      totalAmount ,
+      totalAmount,
     } = req.body;
+
+    const sequenceDocument = await Counter.findOneAndUpdate(
+      { _id: `orderNumber_${userId}` },
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
+    );
+
+    const orderNumber = sequenceDocument.seq;
+    console.log("Order Number:", orderNumber);
+
     const newOrder = new Order({
+      orderNumber,
       userId,
       products,
       quantity,
@@ -742,6 +750,7 @@ orders.post("/", Auth, async (req, res) => {
       discountType,
       totalAmount,
     });
+    console.log(newOrder);
     const savedOrder = await newOrder.save();
     res.status(200).json(savedOrder);
   } catch (err) {
@@ -749,8 +758,6 @@ orders.post("/", Auth, async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-
 
 // Update
 orders.put("/:id", Auth, async (req, res) => {
@@ -762,7 +769,7 @@ orders.put("/:id", Auth, async (req, res) => {
       },
       { new: true }
     );
-    console.log(updatedOrder)
+    console.log(updatedOrder);
     res.status(200).json(updatedOrder);
   } catch (err) {
     res.status(500).json(err);
@@ -817,9 +824,6 @@ orders.get("/", Auth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-
-
 
 // Get all orders based on Customer Id;
 orders.get("/customer/:customerId", Auth, async (req, res) => {

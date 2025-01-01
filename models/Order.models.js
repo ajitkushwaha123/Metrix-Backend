@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const OrderSchema = new mongoose.Schema(
   {
+    orderNumber: { type: String },
     userId: { type: String },
     customerId : { type: String },
     tableId : { type: String },

@@ -36,7 +36,7 @@ const uploadMiddleware = multer({
   },
 });
 
-const genAI = new GoogleGenerativeAI("AIzaSyDWjRCn4Ae8ZRX-aHBZWWSg8dhMQy3Cb6g");
+const genAI = new GoogleGenerativeAI("AIzaSyAzLX7YRreKOh4BEszmTSK2yRroWf3ROJ8");
 
 gemini.post("/upload", upload.single("photos"), async (req, res) => {
   const file = req.file;
@@ -59,7 +59,7 @@ gemini.post("/upload", upload.single("photos"), async (req, res) => {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const prompt = `!important Must fill all the fields (photos and variant can be empty for a few products but the rest should be completely filled). Extract the product details from the menu in CSV format with the following columns:
+    const prompt = `!important Do not add csv before data Must fill all the fields and strictly do not add comment or note anything just send the csv data (photos and variant can be empty for a few products but the rest should be completely filled). Extract the product details from the menu in CSV format with the following columns:
 Name
 Category (Capitalize)
 Price (int)
@@ -89,19 +89,22 @@ Butter Chicken,Main Course,250,5,"",BTC,Quater,200,Half,300,Full,400,`;
     };
 
     const result = await model.generateContent([prompt, image]);
-    console.log(result.response.text());
+    const responseText = result.response.text();
 
     if (
-      !result.response
-        .text()
-        .startsWith(
-          "Name,Category,Price,Stock,Photos,ShortCode,Variant1,Value1,Variant2,Value2,Variant3,Value3"
-        )
+      !responseText.includes(
+        "Name,Category,Price,Stock,Photos,ShortCode,Variant1,Value1,Variant2,Value2,Variant3,Value3"
+      )
     ) {
+      console.log("Invalid CSV format in response");
       return res.status(400).json({ error: "Invalid CSV format in response" });
     }
 
-    const csvData = result.response.text();
+    const csvDataStartIndex = responseText.indexOf(
+      "Name,Category,Price,Stock,Photos,ShortCode,Variant1,Value1,Variant2,Value2,Variant3,Value3"
+    );
+    const csvData = responseText.substring(csvDataStartIndex);
+
     const parsedData = Papa.parse(csvData, { header: true });
     const jsonData = parsedData.data;
 
@@ -114,5 +117,6 @@ Butter Chicken,Main Course,250,5,"",BTC,Quater,200,Half,300,Full,400,`;
     return res.status(500).json({ error: "Error uploading or parsing data" });
   }
 });
+
 
 export default gemini;

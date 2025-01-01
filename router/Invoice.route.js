@@ -5,8 +5,7 @@ import puppeteer from "puppeteer";
 import path from "path";
 import fs from "fs";
 import Auth from "../middleware/auth.js";
-
-// Create Invoice
+import { Counter } from "../models/Counter.model.js";
 
 import { fileURLToPath } from "url";
 
@@ -15,19 +14,32 @@ const __dirname = path.dirname(__filename);
 
 const invoice = express();
 
-invoice.post("/create" , Auth, async (req, res) => {
+invoice.post("/create", Auth, async (req, res) => {
   try {
+    const { userId } = req.user;
+
+    const sequenceDocument = await Counter.findOneAndUpdate(
+      { _id: `invoiceNumber_${userId}` },
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
+    );
+
+    const invoiceNumber = sequenceDocument.seq;
+    req.body.invoiceNumber = "INV_" + invoiceNumber;
     const invoice = new Invoice(req.body);
+    console.log("invoice", invoice);
+
     await invoice.save();
     res.send(invoice);
   } catch (error) {
+    console.error("Error creating invoice:", error);
     res.status(500).send(error);
   }
 });
 
+
 invoice.put("/edit/:id", Auth, async (req, res) => {
   const { userId } = req.user;
-  // console.log("userId", userId);
 
   const invoiceId = req.params.id;
 
@@ -40,8 +52,6 @@ invoice.put("/edit/:id", Auth, async (req, res) => {
   res.status(200).json({ invoice: updatedInvoice });
 });
 
-
-// Generate PDF
 invoice.get("/pdf/:id", async (req, res) => {
   try {
     const invoice = await Invoice.findById(req.params.id);
@@ -117,6 +127,7 @@ invoice.get("/invoice/:id", async (req, res) => {
     restourantPhone: invoice.restourantPhone,
     tax: invoice.tax,
     discount: invoice.discount,
+    invoiceNumber: invoice.invoiceNumber,
   };
 
   // console.log(invoiceData);
@@ -148,10 +159,10 @@ invoice.get("/invoice/:id", async (req, res) => {
     await page.pdf({
       path: pdfPath,
       width: "4in",
-      height: `${contentHeight + 30}px`, 
+      height: `${contentHeight + 30}px`,
       printBackground: true,
       margin: { top: "10px", right: "10px", bottom: "10px", left: "10px" }, // Reduced margins
-      scale: 1, 
+      scale: 1,
     });
 
     await browser.close();
@@ -200,7 +211,7 @@ invoice.get("/kot/:id", async (req, res) => {
     );
 
     const browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: "networkidle0" });
@@ -252,10 +263,9 @@ invoice.put("/kot/edit/:id", Auth, async (req, res) => {
     { new: true }
   );
 
-  console.log("updatedInvoice" , updatedInvoice);
+  console.log("updatedInvoice", updatedInvoice);
 
   res.status(200).json({ invoice: updatedInvoice });
 });
-
 
 export default invoice;
