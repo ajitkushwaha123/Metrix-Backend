@@ -25,7 +25,7 @@ invoice.post("/create", Auth, async (req, res) => {
     );
 
     const invoiceNumber = sequenceDocument.seq;
-    req.body.invoiceNumber = "INV_" + invoiceNumber;
+    req.body.invoiceNumber = 1000 + invoiceNumber;
     const invoice = new Invoice(req.body);
     console.log("invoice", invoice);
 
@@ -200,6 +200,7 @@ invoice.get("/kot/:id", async (req, res) => {
     restourantPhone: invoice.restourantPhone,
     tax: invoice.tax,
     discount: invoice.discount,
+    kotId : invoice.invoiceNumber,
   };
 
   // console.log(invoiceData);

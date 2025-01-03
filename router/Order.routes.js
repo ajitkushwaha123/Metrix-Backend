@@ -725,7 +725,7 @@ orders.post("/", Auth, async (req, res) => {
       { new: true, upsert: true }
     );
 
-    const orderNumber = sequenceDocument.seq;
+    const orderNumber = 1000 + sequenceDocument.seq;
     console.log("Order Number:", orderNumber);
 
     const newOrder = new Order({
